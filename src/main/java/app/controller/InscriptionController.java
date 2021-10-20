@@ -95,7 +95,6 @@ public class InscriptionController {
                 Membre membre = new Membre(compte);
                 membre.setNom(txtNom.getText());
                 membre.setPrenom(txtPrenom.getText());
-                membre.setEmail(txtEmail.getText());
                 membre.setDateNaissance(Date.valueOf(txtDateNaissance.getValue()));
                 membre.setCodePostal(txtCodePostal.getText());
                 membre.setAdressePostale(txtAdressePostale.getText());
@@ -109,35 +108,6 @@ public class InscriptionController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                /*
-                try {
-
-                    Node node = (Node) actionEvent.getSource();
-                    Stage stage = (Stage) node.getScene().getWindow();
-                    stage.close();
-
-                    Scene scene = new Scene(FXMLLoader.load(Main.class.getResource("index.fxml")));
-                    stage.setScene(scene);
-                    stage.show();
-
-
-                    Node node = (Node) actionEvent.getSource();
-                    Stage stage = (Stage) node.getScene().getWindow();
-                    stage.close();
-                    FXMLLoader loader = new FXMLLoader(Main.class.getResource("index.fxml"));
-                    Parent root = (Parent) loader.load();
-
-                    IndexController indexController = loader.getController();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                stage = (Stage) scenePane.getScene().getWindow();
-                System.out.println("Inscription validée");
-                stage.close();
-
-                 */
 
             } else {
                 errorCompte.setText("Le compte existe déja");

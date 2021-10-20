@@ -1,6 +1,7 @@
 package app.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Article {
     protected long id;
@@ -8,6 +9,7 @@ public class Article {
     protected String description;
     protected float fraisPort;
     protected String regionLivraison;
+    protected Timestamp dateHeureCreation;
     protected Date dateCloture;
     protected String modeCloture;
     protected float montantVente;
@@ -57,6 +59,14 @@ public class Article {
 
     public void setRegionLivraison(String regionLivraison) {
         this.regionLivraison = regionLivraison;
+    }
+
+    public Timestamp getDateHeureCreation() {
+        return dateHeureCreation;
+    }
+
+    public void setDateHeureCreation(Timestamp dateHeureCreation) {
+        this.dateHeureCreation = dateHeureCreation;
     }
 
     public Date getDateCloture() {
@@ -121,6 +131,14 @@ public class Article {
 
     public void setVendeur(Membre vendeur) {
         this.vendeur = vendeur;
+    }
+
+    public Membre getAcheteur() {
+        return acheteur;
+    }
+
+    public void setAcheteur(Membre acheteur) {
+        this.acheteur = acheteur;
     }
 
     public OptionEnchere getOption() {

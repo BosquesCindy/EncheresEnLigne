@@ -4,6 +4,7 @@ public class SignalerMembre {
     private long id;
     private Membre membre;
     private String commentaire;
+    private ServiceJuridique serviceJuridique;
 
     public long getId() {
         return id;
@@ -27,5 +28,13 @@ public class SignalerMembre {
 
     public void setCommentaire(String commentaire) {
         this.commentaire = commentaire;
+    }
+
+    public ServiceJuridique getServiceJuridique() {
+        return serviceJuridique;
+    }
+
+    public void setServiceJuridique(ServiceJuridique serviceJuridique) {
+        this.serviceJuridique = serviceJuridique;
     }
 }

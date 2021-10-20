@@ -1,11 +1,21 @@
 package app.model;
 
 public class Vote {
+
+    private long id;
     private String commantaire;
     private Avis avis;
     private TypeMembre typeMembre;
     private Article article;
     private Membre membre;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getCommantaire() {
         return commantaire;

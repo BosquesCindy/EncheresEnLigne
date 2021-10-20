@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.ArticlesController">
+
+<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.MembresController">
     <children>
         <Pane fx:id="pnlOverview" layoutX="22.0" layoutY="10.0" prefHeight="554.0" prefWidth="781.0" style="-fx-background-color: #FFFFFF;">
             <children>
@@ -31,11 +33,11 @@
                         <Image url="@../icons/icons8_Search_52px.png" />
                     </image>
                 </ImageView>
-                <TableView layoutX="20.0" layoutY="185.0" prefHeight="338.0" prefWidth="745.0">
+                <TableView fx:id="tvMembres" layoutX="20.0" layoutY="185.0" prefHeight="338.0" prefWidth="745.0">
                     <columns>
-                        <TableColumn prefWidth="151.0" text="Nom" />
-                        <TableColumn minWidth="0.0" prefWidth="112.0" text="Prenom" />
-                        <TableColumn prefWidth="158.0" text="Email" />
+                        <TableColumn fx:id="tcNom" prefWidth="151.0" text="Nom" />
+                        <TableColumn fx:id="tcPrenom" minWidth="0.0" prefWidth="112.0" text="Prenom" />
+                        <TableColumn fx:id="tcEmail" prefWidth="158.0" text="Email" />
                         <TableColumn prefWidth="158.0" />
                     </columns>
                     <columnResizePolicy>

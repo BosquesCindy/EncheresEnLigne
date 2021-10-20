@@ -16,6 +16,7 @@ public class Article {
     protected float prixAchatImmediat;
     protected Categorie categorie;
     protected Membre vendeur;
+    protected Membre acheteur;
     protected OptionEnchere option;
 
     public long getId() {

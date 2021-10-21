@@ -46,7 +46,15 @@ public class Article {
         this.vendeur = new SimpleObjectProperty<Membre>();
         this.acheteur = new SimpleObjectProperty<Membre>();
         this.option = new SimpleObjectProperty<OptionEnchere>();
-        this.button = new Button(" ");
+        this.button = new Button("Détail");
+    }
+
+    public Button getButton() {
+        return button;
+    }
+
+    public void setButton(Button button) {
+        this.button = button;
     }
 
     public long getId() {

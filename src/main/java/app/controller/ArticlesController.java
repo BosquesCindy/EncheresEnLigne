@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.Main;
+import app.controller.popup.DetailArticleController;
 import app.dao.ArticleDao;
 import app.dao.CategorieDao;
 import app.model.Article;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -42,7 +44,7 @@ public class ArticlesController implements Initializable {
     private ObservableList<Article> dataArticle;
     private ObservableList<Categorie> dataCategorie;
     private IndexController indexController;
-
+    private HashMap<Button, Article> hashMapBtnArticle;
 
     private void manageArticle(){
         if (indexController.getCompte() == null) {
@@ -57,12 +59,12 @@ public class ArticlesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
         //manageArticle();
         dataCategorie = FXCollections.observableArrayList();
 
         CategorieDao categorieDao = new CategorieDao();
         categorieDao.findAll().forEach(categorie -> {
+
             dataCategorie.add(categorie);
         });
 
@@ -84,35 +86,6 @@ public class ArticlesController implements Initializable {
             this.indexController.showPopop("article-creer");
         }
     }
-    /*
-    private void creerArticle(){
-        this.indexController.showPopop("article-creer");
-    }
-
-    private void encherirArticle(){
-        this.indexController.showPopop("article-encherir");
-    }
-*/
-    private void showPopop(String resource){
-        try {
-            Parent parent = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("view/article-creer.fxml")));
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("view/" + resource + ".fxml"));
-            //Parent root = (Parent) loader.load();
-            /*
-            switch (resource) {
-                case "article-creer" -> ((CreerArticleController) loader.getController()).setArticlesController(this);
-                case "article-encherir" -> ((EncherirArticleController) loader.getController()).setArticlesController(this);
-            }
-
-             */
-            Stage stage = new Stage();
-            Scene scene = new Scene(parent);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void rechercher() {
         if (!cbxCategorie.getSelectionModel().isEmpty()){
@@ -124,16 +97,56 @@ public class ArticlesController implements Initializable {
     }
 
     private void loadTableViewTousArticle(ArrayList<Article> articles) {
+        hashMapBtnArticle = new HashMap<>();
+
         dataArticle = FXCollections.observableArrayList();
-        articles.forEach(m -> {
-            dataArticle.add(m);
+        articles.forEach(article -> {
+            article.getButton().setOnAction(this::handleButtonAction);
+            dataArticle.add(article);
+            hashMapBtnArticle.put(article.getButton(), article);
         });
+
         tc1Titre.setCellValueFactory(new PropertyValueFactory<>("titre"));
         tc1DateCreation.setCellValueFactory(new PropertyValueFactory<>("dateHeureCreation"));
         tc1Categorie.setCellValueFactory(data -> data.getValue().getCategorie().libelleProperty());
         tc1Vendeur.setCellValueFactory(data -> data.getValue().getVendeur().nomProperty());
         tc1BtnDetail.setCellValueFactory(new PropertyValueFactory<Article, String>("button"));
         tvTousArticle.setItems(dataArticle);
+
+    }
+
+    private void handleButtonAction(ActionEvent actionEvent){
+        try {
+            Article article = hashMapBtnArticle.get(actionEvent.getSource());
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("view/popup/article-detail.fxml"));
+            Parent root = (Parent) loader.load();
+            Stage stage = new Stage();
+            DetailArticleController detailArticleController = (DetailArticleController) loader.getController();
+            detailArticleController.setIndexController(this.indexController);
+            detailArticleController.setStage(stage);
+            detailArticleController.setArticle(article);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void showDetail(Article article){
+
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("view/popup/article-detail.fxml"));
+            Parent root = (Parent) loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

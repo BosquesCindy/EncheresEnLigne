@@ -1,19 +1,22 @@
 package app.dao;
 
+import app.model.Compte;
 import app.model.Membre;
 import app.model.OptionEnchere;
 import app.model.SignalerArticle;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class MembreDao extends DAO<Membre>{
 
     private static final String SELECT_ALL = "SELECT * FROM membre";
     private static final String SELECT_BY_ID = "SELECT * FROM membre WHERE membre_id = ?";
+    private static final String SELECT_BY_COMPTE = "SELECT * FROM membre WHERE compte_id = ?";
+    private static final String UPDATE = "";
+    private static final String CREATE = "";
+    private static final String DELETE = "";
+
 
     public ArrayList<Membre> findAll() {
         ArrayList<Membre> membres = new ArrayList<>();
@@ -65,6 +68,31 @@ public class MembreDao extends DAO<Membre>{
             e.printStackTrace();
         }
         return  membre;
+    }
+
+    public Membre findByCompte(Compte compte){
+        Membre membre = null;
+        try {
+            PreparedStatement preparedStatement = super.connection.prepareStatement(SELECT_BY_COMPTE);
+            preparedStatement.setLong(1, compte.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                membre = new Membre();
+                membre.setId(resultSet.getLong("membre_id"));
+                membre.setNom(resultSet.getString("membre_nom"));
+                membre.setPrenom(resultSet.getString("membre_prenom"));
+                membre.setDateNaissance(Date.valueOf(String.valueOf(resultSet.getDate("membre_date_naissance"))));
+                membre.setCodePostal(resultSet.getString("membre_code_postal"));
+                membre.setAdressePostale(resultSet.getString("membre_adresse_postale"));
+                membre.setVille(resultSet.getString("membre_ville"));
+                membre.setPays(resultSet.getString("membre_pays"));
+                membre.setMembrePlus(resultSet.getInt("membre_plus") == 1);
+                membre.setCompte(compte);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return membre;
     }
 
     @Override

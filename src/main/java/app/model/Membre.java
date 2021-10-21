@@ -20,6 +20,7 @@ public class Membre {
     private StringProperty codePostal;
     private StringProperty ville;
     private StringProperty pays;
+    private BooleanProperty membrePlus;
     private ObjectProperty<Compte> compte;
 
     public Membre() {
@@ -31,7 +32,20 @@ public class Membre {
         this.codePostal = new SimpleStringProperty();
         this.ville = new SimpleStringProperty();
         this.pays = new SimpleStringProperty();
+        this.membrePlus = new SimpleBooleanProperty();
         this.compte = new SimpleObjectProperty<Compte>();
+    }
+
+    public boolean isMembrePlus() {
+        return membrePlus.get();
+    }
+
+    public BooleanProperty membrePlusProperty() {
+        return membrePlus;
+    }
+
+    public void setMembrePlus(boolean membrePlus) {
+        this.membrePlus.set(membrePlus);
     }
 
     public long getId() {

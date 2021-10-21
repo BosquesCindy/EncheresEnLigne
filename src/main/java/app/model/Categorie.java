@@ -43,4 +43,9 @@ public class Categorie {
     public void setLibelle(String libelle) {
         this.libelle.set(libelle);
     }
+
+    @Override
+    public String toString() {
+        return this.libelle.get();
+    }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -20,16 +21,16 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TabPane layoutY="90.0" prefHeight="457.0" prefWidth="774.0" stylesheets="@../css/styles.css" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tabPanelArticle" layoutY="90.0" prefHeight="457.0" prefWidth="774.0" stylesheets="@../css/styles.css" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="Tous les articles">
+                <Tab fx:id="tabTousArticles" text="Tous les articles">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="766.0">
                            <children>
                               <HBox alignment="CENTER" layoutX="18.0" layoutY="14.0" prefHeight="54.0" prefWidth="661.0" spacing="50.0">
                                  <children>
-                                    <JFXButton prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #0275d8;" text="Vendus" textFill="WHITESMOKE" />
-                                    <JFXButton prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #0275d8;" text="Signalé" textFill="WHITESMOKE" />
+                                    <ComboBox fx:id="cbxCategorie" prefWidth="150.0" promptText="Catégorie" />
+                                    <JFXButton fx:id="btnRechercher" onAction="#handleClicks" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #0275d8;" text="Rechercher" textFill="WHITESMOKE" />
                                  </children>
                               </HBox>
                               <TableView fx:id="tvTousArticle" layoutY="76.0" prefHeight="338.0" prefWidth="763.0" stylesheets="@../css/styles.css">
@@ -48,7 +49,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Mes articles">
+                <Tab fx:id="tabMesArticles" text="Mes articles">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -70,7 +71,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <JFXButton layoutX="205.0" layoutY="34.0" prefHeight="25.0" prefWidth="120.0" style="-fx-background-color: #0275d8;" text="Ajouté une enchère" textFill="WHITESMOKE" />
+            <JFXButton fx:id="btnCreerArticle" layoutX="205.0" layoutY="34.0" onAction="#handleClicks" prefHeight="25.0" prefWidth="120.0" style="-fx-background-color: #0275d8;" text="+ Créer un article" textFill="WHITESMOKE" />
          </children>
       </Pane>
    </children>

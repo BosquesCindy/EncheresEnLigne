@@ -21,6 +21,7 @@ public class MembresController implements Initializable {
     public TableColumn<Membre, String> tcEmail;
     public TableView tvMembres;
     private ObservableList<Membre> dataMembre;
+    private IndexController indexController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -38,7 +39,10 @@ public class MembresController implements Initializable {
 
         tvMembres.setItems(dataMembre);
 
+    }
 
+    public void setIndexController(IndexController indexController) {
+        this.indexController = indexController;
     }
 }
 ;

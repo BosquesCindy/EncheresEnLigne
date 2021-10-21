@@ -10,7 +10,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.ComboBox?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="app.controller.popup.CreerArticleController">
     <children>
         <VBox alignment="CENTER" layoutX="166.0" prefHeight="500.0" prefWidth="418.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="166.0" AnchorPane.rightAnchor="166.0" AnchorPane.topAnchor="0.0">
@@ -42,7 +41,7 @@
                         <VBox layoutX="74.0" layoutY="138.0" prefHeight="51.0" prefWidth="227.0">
                             <children>
                                 <Label text="Catégorie" />
-                                <ComboBox fx:id="txtCategorie" prefHeight="23.0" prefWidth="223.0" />
+                                <ChoiceBox fx:id="txtCategorie" prefHeight="23.0" prefWidth="223.0" />
                                 <Text fx:id="errorCategorie" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
                                     <font>
                                         <Font size="10.0" />
@@ -96,12 +95,12 @@
                         </VBox>
                         <VBox alignment="CENTER" layoutX="234.0" layoutY="354.0" prefHeight="32.0" prefWidth="125.0">
                             <children>
-                                <Button fx:id="btnSubmit" onAction="#onSubmit" mnemonicParsing="false"  prefHeight="25.0" prefWidth="97.0" text="Valider" />
+                                <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#onSubmit" prefHeight="25.0" prefWidth="97.0" text="Valider" />
                             </children>
                         </VBox>
                         <VBox alignment="CENTER" layoutX="78.0" layoutY="354.0" prefHeight="32.0" prefWidth="125.0">
                             <children>
-                                <Button fx:id="btnAnnuler" onAction="#annuler" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Annuler" />
+                                <Button fx:id="btnAnnuler" mnemonicParsing="false" onAction="#annuler" prefHeight="25.0" prefWidth="97.0" text="Annuler" />
                             </children>
                         </VBox>
                         <VBox layoutX="74.0" layoutY="247.0" prefHeight="51.0" prefWidth="134.0">

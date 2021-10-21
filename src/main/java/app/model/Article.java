@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.Button;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -26,6 +27,7 @@ public class Article {
     protected SimpleObjectProperty<Membre> vendeur;
     protected SimpleObjectProperty<Membre> acheteur;
     protected SimpleObjectProperty<OptionEnchere> option;
+    private Button button;
 
     public Article(){
         this.id = new SimpleLongProperty();
@@ -44,6 +46,7 @@ public class Article {
         this.vendeur = new SimpleObjectProperty<Membre>();
         this.acheteur = new SimpleObjectProperty<Membre>();
         this.option = new SimpleObjectProperty<OptionEnchere>();
+        this.button = new Button(" ");
     }
 
     public long getId() {

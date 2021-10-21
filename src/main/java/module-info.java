@@ -8,6 +8,7 @@ module app {
 
     opens app to javafx.fxml;
     exports app;
+    exports app.controller.popup;
     exports app.controller;
     exports app.model;
     opens app.controller to javafx.fxml;

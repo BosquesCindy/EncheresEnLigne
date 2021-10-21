@@ -1,16 +1,18 @@
 package app.controller;
 
 import app.Main;
+import app.controller.popup.*;
 import app.model.Compte;
-import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,7 +46,7 @@ public class IndexController implements Initializable {
     @FXML
     private StackPane contentArea;
 
-    public Compte compte;
+    private Compte compte;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -92,6 +94,10 @@ public class IndexController implements Initializable {
         }
     }
 
+    public Compte getCompte() {
+        return compte;
+    }
+
     public void setCompte(Compte compte) {
         this.compte = compte;
     }
@@ -106,6 +112,8 @@ public class IndexController implements Initializable {
             case "accueil" -> ((AccueilController) loader.getController()).setIndexController(this);
             case "connexion" -> ((ConnexionController) loader.getController()).setIndexController(this);
             case "inscription" -> ((InscriptionController) loader.getController()).setIndexController(this);
+            case "articles" -> ((ArticlesController) loader.getController()).setIndexController(this);
+            case "membres" -> ((MembresController) loader.getController()).setIndexController(this);
             default -> {
             }
         }
@@ -128,6 +136,34 @@ public class IndexController implements Initializable {
         } else if (btnDeconnexion.equals(actionEvent.getSource())) {
             setCompte(null);
             redirect("connexion");
+        }
+    }
+
+    public void showPopop(String resource){
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("view/popup/" + resource + ".fxml"));
+            Parent root = (Parent) loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            switch (resource) {
+                case "article-creer" :
+                    CreerArticleController creerArticleController = (CreerArticleController) loader.getController();
+                    creerArticleController.setIndexController(this);
+                    creerArticleController.setStage(stage);
+                    break;
+                case "article-detail" :
+                    DetailArticleController detailArticleController = (DetailArticleController) loader.getController();
+                    detailArticleController.setIndexController(this);
+                    detailArticleController.setStage(stage);
+                    break;
+                default:
+                    break;
+            }
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -2,6 +2,7 @@ package app.model;
 
 import app.dao.ArticleDao;
 import app.dao.VoteDao;
+import javafx.beans.property.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -11,96 +12,137 @@ import java.util.ArrayList;
 
 public class Membre {
 
-    private long id;
-    private String nom;
-    private String prenom;
-    private Date dateNaissance;
-    private String adressePostale;
-    private String codePostal;
-    private String ville;
-    private String pays;
-    private Compte compte;
+    private LongProperty id;
+    private StringProperty nom;
+    private StringProperty prenom;
+    private ObjectProperty<Date> dateNaissance;
+    private StringProperty adressePostale;
+    private StringProperty codePostal;
+    private StringProperty ville;
+    private StringProperty pays;
+    private ObjectProperty<Compte> compte;
 
     public Membre() {
+        this.id = new SimpleLongProperty();
+        this.nom = new SimpleStringProperty();
+        this.prenom = new SimpleStringProperty();
+        this.dateNaissance = new SimpleObjectProperty<Date>();
+        this.adressePostale = new SimpleStringProperty();
+        this.codePostal = new SimpleStringProperty();
+        this.ville = new SimpleStringProperty();
+        this.pays = new SimpleStringProperty();
+        this.compte = new SimpleObjectProperty<Compte>();
     }
 
-
     public long getId() {
+        return id.get();
+    }
+
+    public LongProperty idProperty() {
         return id;
     }
 
     public void setId(long id) {
-        this.id = id;
-    }
-
-    public Membre(Compte compte) {
-        this.compte = compte;
+        this.id.set(id);
     }
 
     public String getNom() {
+        return nom.get();
+    }
+
+    public StringProperty nomProperty() {
         return nom;
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nom.set(nom);
     }
 
     public String getPrenom() {
+        return prenom.get();
+    }
+
+    public StringProperty prenomProperty() {
         return prenom;
     }
 
     public void setPrenom(String prenom) {
-        this.prenom = prenom;
+        this.prenom.set(prenom);
     }
 
     public Date getDateNaissance() {
+        return dateNaissance.get();
+    }
+
+    public ObjectProperty<Date> dateNaissanceProperty() {
         return dateNaissance;
     }
 
     public void setDateNaissance(Date dateNaissance) {
-        this.dateNaissance = dateNaissance;
+        this.dateNaissance.set(dateNaissance);
     }
 
     public String getAdressePostale() {
+        return adressePostale.get();
+    }
+
+    public StringProperty adressePostaleProperty() {
         return adressePostale;
     }
 
     public void setAdressePostale(String adressePostale) {
-        this.adressePostale = adressePostale;
+        this.adressePostale.set(adressePostale);
     }
 
     public String getCodePostal() {
+        return codePostal.get();
+    }
+
+    public StringProperty codePostalProperty() {
         return codePostal;
     }
 
     public void setCodePostal(String codePostal) {
-        this.codePostal = codePostal;
+        this.codePostal.set(codePostal);
     }
 
     public String getVille() {
+        return ville.get();
+    }
+
+    public StringProperty villeProperty() {
         return ville;
     }
 
     public void setVille(String ville) {
-        this.ville = ville;
+        this.ville.set(ville);
     }
 
     public String getPays() {
+        return pays.get();
+    }
+
+    public StringProperty paysProperty() {
         return pays;
     }
 
     public void setPays(String pays) {
-        this.pays = pays;
+        this.pays.set(pays);
     }
 
     public Compte getCompte() {
+        return compte.get();
+    }
+
+    public ObjectProperty<Compte> compteProperty() {
         return compte;
     }
 
     public void setCompte(Compte compte) {
-        this.compte = compte;
+        this.compte.set(compte);
     }
 
+    /*
     public boolean avoirPrixGold(){
         VoteDao voteDao=new VoteDao();
         ArrayList<Vote> votesVendeur=voteDao.findByTypeMembre(this,TypeMembre.VENDEUR);
@@ -130,4 +172,8 @@ public class Membre {
         }
         return false;
     }
+
+     */
+
+
 }

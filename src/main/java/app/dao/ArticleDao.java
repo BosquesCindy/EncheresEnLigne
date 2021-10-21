@@ -5,122 +5,131 @@ import app.model.Categorie;
 import app.model.Membre;
 import app.model.MembrePlus;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.lang.invoke.TypeDescriptor;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ArticleDao extends DAO<Article>{
 
     private static final String SELECT_ALL = "SELECT * FROM article";
-    private static String SELECT_BY_ID = "SELECT * FROM article WHERE  = ?";
-    private static String SELECT_BY_VENDEUR = "SELECT * FROM article WHERE membre_vendeur_id = ?";
-    private static String SELECT_BY_ACHETEUR = "SELECT * FROM article WHERE membre_acheteur_id = ?";
-    private static String SELECT_BY_CATEGORIE = "SELECT * FROM article WHERE categorie_id = ?";
-    private static String DELETE_BY_ID = "DELETE FROM article WHERE article_id = ?";
-    private static final String CREATE = "INSERT INTO article (article_titre,article_description,article_frais_port,article_region_livraison,article_date_heure_creation,article_date_cloture,article_mode_cloture,article_montant_vente,article_prix_depart,article_prix_reserve,article_prix_achat_immediat,categorie_id,option_enchere_id,membre_vendeur_id,membre_acheteur_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SELECT_BY_ID = "SELECT * FROM article WHERE artcle_id = ?";
+    private static final String SELECT_BY_VENDEUR = "SELECT * FROM article WHERE membre_vendeur_id = ?";
+    private static final String SELECT_BY_ACHETEUR = "SELECT * FROM article WHERE membre_acheteur_id = ?";
+    private static final String SELECT_BY_CATEGORIE = "SELECT * FROM article WHERE categorie_id = ?";
+    private static final String DELETE = "DELETE FROM article WHERE article_id = ?";
+    private static final String CREATE = "INSERT INTO article (article_titre," +
+                                                                " article_description," +
+                                                                " article_frais_port," +
+                                                                " article_region_livraison," +
+                                                                " article_date_heure_creation," +
+                                                                " article_date_cloture," +
+                                                                " article_mode_cloture," +
+                                                                " article_montant_vente," +
+                                                                " article_prix_depart," +
+                                                                " article_prix_reserve," +
+                                                                " article_prix_achat_immediat," +
+                                                                " categorie_id," +
+                                                                " option_enchere_id," +
+                                                                " membre_vendeur_id)" +
+                                                                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+
+    private ArrayList<Article> getResulSet(ResultSet resultSet) throws SQLException {
+        ArrayList<Article> articles = new ArrayList<>();
+        CategorieDao categorieDao = new CategorieDao();
+        Categorie categorie;
+        Membre membre;
+        OptionEnchereDao optionEnchereDao = new OptionEnchereDao();
+        MembreDao membreDao = new MembreDao();
+        Article article;
+        while (resultSet.next()) {
+
+            article = new Article();
+            article.setId(resultSet.getLong("article_id"));
+            article.setTitre(resultSet.getString("article_titre"));
+            article.setDescription(resultSet.getString("article_description"));
+            article.setFraisPort(resultSet.getFloat("article_frais_port"));
+            article.setRegionLivraison(resultSet.getString("article_region_livraison"));
+            article.setDateHeureCreation(resultSet.getTimestamp("article_date_heure_creation"));
+            article.setDateCloture(resultSet.getDate("article_date_cloture"));
+            article.setModeCloture(resultSet.getString("article_mode_cloture"));
+            article.setMontantVente(resultSet.getFloat("article_montant_vente"));
+            article.setPrixDepart(resultSet.getFloat("article_prix_depart"));
+            article.setPrixReserve(resultSet.getFloat("article_prix_reserve"));
+            article.setPrixAchatImmediat(resultSet.getFloat("article_prix_achat_immediat"));
+            article.setCategorie(categorieDao.findById(resultSet.getLong("categorie_id")));
+            article.setOption(optionEnchereDao.findById(resultSet.getLong("option_enchere_id")) != null ? optionEnchereDao.findById(resultSet.getLong("option_enchere_id")) : null);
+            article.setVendeur(membreDao.findById(resultSet.getLong("membre_vendeur_id")));
+            article.setAcheteur(membreDao.findById(resultSet.getLong("membre_acheteur_id")) != null ? membreDao.findById(resultSet.getLong("membre_acheteur_id")) : null);
+            articles.add(article);
+        }
+        return articles;
+    }
 
     public ArrayList<Article> findAll(){
-        ArrayList<Article> articles=null;
+        ArrayList<Article> articles = new ArrayList<>();
         try{
-            articles=new ArrayList<>();
-            PreparedStatement stmt= super.connection.prepareStatement(SELECT_ALL);
-            ResultSet rs=stmt.executeQuery();
-            while (rs.next()){
-                Article article=this.findById(rs.getLong("article_id"));
-                articles.add(article);
-            }
+            Statement statement= super.connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SELECT_ALL);
+            articles = getResulSet(resultSet);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return articles;
     }
 
-    public ArrayList<Article> findByVendeur(Membre membre){
-        ArrayList<Article> articlesByVenduer=null;
-        SELECT_BY_VENDEUR=SELECT_BY_VENDEUR+membre.getId();
+    public ArrayList<Article> findByVendeur(long id){
+        ArrayList<Article> articles = new ArrayList<>();
         try{
-            articlesByVenduer=new ArrayList<>();
-            PreparedStatement stmt= super.connection.prepareStatement(SELECT_BY_VENDEUR);
-            ResultSet rs=stmt.executeQuery();
-            while (rs.next()){
-                Article article=this.findById(rs.getLong("article_id"));
-                articlesByVenduer.add(article);
-            }
+            PreparedStatement preparedStatement= super.connection.prepareStatement(SELECT_BY_VENDEUR);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            articles = getResulSet(resultSet);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return articlesByVenduer;
+        return articles;
     }
 
-    public ArrayList<Article> findByAcheteur(Membre membre){
-        ArrayList<Article> articlesByAcheteur=null;
-        SELECT_BY_ACHETEUR=SELECT_BY_ACHETEUR+membre.getId();
+
+    public ArrayList<Article> findByAcheteur(long id){
+        ArrayList<Article> articles = new ArrayList<>();
         try{
-            articlesByAcheteur=new ArrayList<>();
-            PreparedStatement stmt= super.connection.prepareStatement(SELECT_BY_ACHETEUR);
-            ResultSet rs=stmt.executeQuery();
-            while (rs.next()){
-                Article article=this.findById(rs.getLong("article_id"));
-                articlesByAcheteur.add(article);
-            }
+            PreparedStatement preparedStatement = super.connection.prepareStatement(SELECT_BY_ACHETEUR);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            articles = getResulSet(resultSet);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return articlesByAcheteur;
+        return articles;
     }
 
-    public ArrayList<Article> findByCategorie(Categorie categorie){
-        ArrayList<Article> articlesByCategorie=null;
-        SELECT_BY_CATEGORIE=SELECT_BY_CATEGORIE+categorie.getId();
+    public ArrayList<Article> findByCategorie(long id){
+        ArrayList<Article> articles = new ArrayList<>();
         try{
-            articlesByCategorie=new ArrayList<>();
-            PreparedStatement stmt= super.connection.prepareStatement(SELECT_BY_CATEGORIE);
-            ResultSet rs=stmt.executeQuery();
-            while (rs.next()){
-                Article article=this.findById(rs.getLong("article_id"));
-                articlesByCategorie.add(article);
-            }
+            PreparedStatement preparedStatement = super.connection.prepareStatement(SELECT_BY_CATEGORIE);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            articles = getResulSet(resultSet);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return articlesByCategorie;
+        return articles;
     }
 
     @Override
     public Article findById(long id) {
-        Article article=null;
-        SELECT_BY_ID=SELECT_BY_ID+id;
+        Article article = null;
         try{
-            PreparedStatement stmt= super.connection.prepareStatement(SELECT_BY_ID, Statement.RETURN_GENERATED_KEYS);
-            ResultSet rs=stmt.executeQuery();
-            while(rs.next()){
-                article=new Article();
-                article.setId(id);
-                article.setTitre(rs.getString("article_titre"));
-                article.setDescription(rs.getString("article_description"));
-                article.setFraisPort(rs.getFloat("article_frais_port"));
-                article.setRegionLivraison(rs.getString("article_region_livraison"));
-                article.setDateHeureCreation(rs.getTimestamp("article_date_heure_creation"));
-                article.setDateCloture(rs.getDate("article_date_cloture"));
-                article.setModeCloture(rs.getString("article_mode_cloture"));
-                article.setMontantVente(rs.getFloat("article_montant_vente"));
-                article.setPrixDepart(rs.getFloat("article_prix_depart"));
-                article.setPrixReserve(rs.getFloat("article_prix_reserve"));
-                article.setPrixAchatImmediat(rs.getFloat("article_prix_achat_immediat"));
-                CategorieDao categorieDao=new CategorieDao();
-                article.setCategorie(categorieDao.findById(rs.getLong("categorie_id")));
-                OptionEnchereDao optionEnchereDao=new OptionEnchereDao();
-                article.setOption(optionEnchereDao.findById(rs.getLong("option_enchere_id")));
-                MembreDao membreDao=new MembreDao();
-                article.setVendeur(membreDao.findById(rs.getLong("membre_vendeur_id")));
-                article.setAcheteur(membreDao.findById(rs.getLong("membre_acheteur_id")));
-
-                return article;}
+            PreparedStatement preparedStatement= super.connection.prepareStatement(SELECT_BY_ID, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            article = getResulSet(resultSet).get(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return article;
     }
 
     @Override
@@ -136,14 +145,17 @@ public class ArticleDao extends DAO<Article>{
             stmt.setString(7,article.getModeCloture());
             stmt.setFloat(8,article.getMontantVente());
             stmt.setFloat(9,article.getPrixDepart());
+            stmt.setFloat(10,article.getPrixReserve());
+            stmt.setFloat(11,article.getPrixAchatImmediat());
             stmt.setLong(12,article.getCategorie().getId());
-            stmt.setLong(13,article.getOption().getId());
+            if (article.getOption() != null)
+                stmt.setLong(13,article.getOption().getId());
+            else
+                stmt.setNull(13, Types.NULL);
+
+
             stmt.setLong(14,article.getVendeur().getId());
-            stmt.setLong(15,article.getAcheteur().getId());
-            if(article.getVendeur() instanceof MembrePlus){
-                stmt.setFloat(10,article.getPrixReserve());
-                stmt.setFloat(11,article.getPrixAchatImmediat());
-            }
+
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
@@ -185,12 +197,10 @@ public class ArticleDao extends DAO<Article>{
 
     @Override
     public void delete(Article article) {
-        DELETE_BY_ID=DELETE_BY_ID+article.getId();
         try{
-            PreparedStatement stmt = super.connection.prepareStatement(DELETE_BY_ID, Statement.RETURN_GENERATED_KEYS);
-            stmt.executeUpdate();
-            ResultSet rs = stmt.getResultSet();
-            System.out.println(rs);
+            PreparedStatement preparedStatement = super.connection.prepareStatement(DELETE);
+            preparedStatement.setLong(1, article.getId());
+            preparedStatement.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ module app {
     requires javafx.fxml;
     requires java.sql;
     requires com.jfoenix;
+    requires javafaker;
 
 
     opens app to javafx.fxml;

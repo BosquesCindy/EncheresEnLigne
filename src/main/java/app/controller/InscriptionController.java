@@ -92,7 +92,8 @@ public class InscriptionController {
             CompteDao compteDao = new CompteDao();
             if (!compteDao.findByEmail(compte.getEmail())) {
                 compteDao.create(compte);
-                Membre membre = new Membre(compte);
+                Membre membre = new Membre();
+                membre.setCompte(compte);
                 membre.setNom(txtNom.getText());
                 membre.setPrenom(txtPrenom.getText());
                 membre.setDateNaissance(Date.valueOf(txtDateNaissance.getValue()));

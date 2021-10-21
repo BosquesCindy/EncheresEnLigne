@@ -26,5 +26,8 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.7.1" level="project" />
+    <orderEntry type="library" name="automaton-1.11-8" level="project" />
+    <orderEntry type="library" name="commons-lang3-3.5" level="project" />
+    <orderEntry type="library" name="generex-1.0.2" level="project" />
   </component>
 </module>

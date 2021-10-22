@@ -11,11 +11,14 @@ import java.util.ArrayList;
 
 public class ArticleDao extends DAO<Article>{
 
-    private static final String SELECT_ALL = "SELECT * FROM article";
+    private static final String SELECT_ALL = "SELECT * FROM article ORDER BY article_date_heure_creation DESC";
     private static final String SELECT_BY_ID = "SELECT * FROM article WHERE artcle_id = ?";
     private static final String SELECT_BY_VENDEUR = "SELECT * FROM article WHERE membre_vendeur_id = ?";
     private static final String SELECT_BY_ACHETEUR = "SELECT * FROM article WHERE membre_acheteur_id = ?";
     private static final String SELECT_BY_CATEGORIE = "SELECT * FROM article WHERE categorie_id = ?";
+    private static final String UPDATE_PRIX_EN_COURS = "UPDATE FROM article SET article_prix_en_cours = ? WHERE article_id = ?";
+    private static final String UPDATE_BLOQUER = "UPDATE FROM article SET article_bloquer = ? WHERE article_id = ?";
+    private static final String UPDATE_CLOTURER = "UPDATE FROM article SET article_cloturer = ? WHERE article_id = ?";
     private static final String DELETE = "DELETE FROM article WHERE article_id = ?";
     private static final String CREATE = "INSERT INTO article (article_titre," +
                                                                 " article_description," +
@@ -28,10 +31,11 @@ public class ArticleDao extends DAO<Article>{
                                                                 " article_prix_depart," +
                                                                 " article_prix_reserve," +
                                                                 " article_prix_achat_immediat," +
+                                                                " article_pas," +
                                                                 " categorie_id," +
                                                                 " option_enchere_id," +
                                                                 " membre_vendeur_id)" +
-                                                                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                                                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 
     private ArrayList<Article> getResulSet(ResultSet resultSet) throws SQLException {
@@ -54,6 +58,8 @@ public class ArticleDao extends DAO<Article>{
             article.setDateCloture(resultSet.getDate("article_date_cloture"));
             article.setModeCloture(resultSet.getString("article_mode_cloture"));
             article.setMontantVente(resultSet.getFloat("article_montant_vente"));
+            article.setPas(resultSet.getFloat("article_pas"));
+            article.setPrixEnCours(resultSet.getFloat("article_prix_en_cours"));
             article.setPrixDepart(resultSet.getFloat("article_prix_depart"));
             article.setPrixReserve(resultSet.getFloat("article_prix_reserve"));
             article.setPrixAchatImmediat(resultSet.getFloat("article_prix_achat_immediat"));
@@ -147,14 +153,16 @@ public class ArticleDao extends DAO<Article>{
             stmt.setFloat(9,article.getPrixDepart());
             stmt.setFloat(10,article.getPrixReserve());
             stmt.setFloat(11,article.getPrixAchatImmediat());
-            stmt.setLong(12,article.getCategorie().getId());
+            stmt.setFloat(12, article.getPas());
+            stmt.setLong(13,article.getCategorie().getId());
+
             if (article.getOption() != null)
-                stmt.setLong(13,article.getOption().getId());
+                stmt.setLong(14,article.getOption().getId());
             else
-                stmt.setNull(13, Types.NULL);
+                stmt.setNull(14, Types.NULL);
 
 
-            stmt.setLong(14,article.getVendeur().getId());
+            stmt.setLong(15,article.getVendeur().getId());
 
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
@@ -205,6 +213,8 @@ public class ArticleDao extends DAO<Article>{
             e.printStackTrace();
         }
     }
+
+
 
     public boolean etatBloque(Article article){
         String query="SELECT * FROM signaler_article Where article_id=?";

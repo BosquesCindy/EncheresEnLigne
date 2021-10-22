@@ -194,7 +194,7 @@ public class CreerArticleController implements Initializable {
     }
 
     public void annuler(ActionEvent actionEvent) {
-
+        this.stage.close();
     }
 
 

@@ -27,6 +27,8 @@ public class Article {
     protected SimpleObjectProperty<Membre> vendeur;
     protected SimpleObjectProperty<Membre> acheteur;
     protected SimpleObjectProperty<OptionEnchere> option;
+    protected SimpleFloatProperty pas;
+    protected SimpleFloatProperty prixEnCours;
     private Button button;
 
     public Article(){
@@ -46,7 +48,33 @@ public class Article {
         this.vendeur = new SimpleObjectProperty<Membre>();
         this.acheteur = new SimpleObjectProperty<Membre>();
         this.option = new SimpleObjectProperty<OptionEnchere>();
+        this.pas = new SimpleFloatProperty();
+        this.prixEnCours = new SimpleFloatProperty();
         this.button = new Button("Détail");
+    }
+
+    public float getPas() {
+        return pas.get();
+    }
+
+    public SimpleFloatProperty pasProperty() {
+        return pas;
+    }
+
+    public void setPas(float pas) {
+        this.pas.set(pas);
+    }
+
+    public float getPrixEnCours() {
+        return prixEnCours.get();
+    }
+
+    public SimpleFloatProperty prixEnCoursProperty() {
+        return prixEnCours;
+    }
+
+    public void setPrixEnCours(float prixEnCours) {
+        this.prixEnCours.set(prixEnCours);
     }
 
     public Button getButton() {

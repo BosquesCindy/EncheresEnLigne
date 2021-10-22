@@ -2,7 +2,9 @@ package app.controller;
 
 import app.Main;
 import app.controller.popup.*;
+import app.dao.MembreDao;
 import app.model.Compte;
+import app.model.Membre;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +24,7 @@ import java.util.logging.Logger;
 
 public class IndexController implements Initializable {
 
+    public Label lblUser;
     @FXML
     private Button btnAccueil;
 
@@ -77,15 +80,21 @@ public class IndexController implements Initializable {
             // Utilisateur
             switch (compte.getRole()) {
                 case MEMBRE :
+                    MembreDao membreDao = new MembreDao();
+                    Membre membre = membreDao.findByCompte(compte);
+                    lblUser.setText(membre.getPrenom() + " " + membre.getNom());
                     System.out.println("MEMBRE");
                     break;
                 case SERVICE_COMMERCIAL:
+                    lblUser.setText(compte.getRole().toString());
                     System.out.println("SERVICE_COMMERCIAL");
                     break;
                 case SERVICE_JURIDIQUE:
+                    lblUser.setText(compte.getRole().toString());
                     System.out.println("SERVICE_JURIDIQUE");
                     break;
                 case GESTIONNAIRE:
+                    lblUser.setText(compte.getRole().toString());
                     System.out.println("GESTIONNAIRE");
                     break;
                 default:
@@ -109,13 +118,36 @@ public class IndexController implements Initializable {
         Parent root = (Parent) loader.load();
 
         switch (resource) {
-            case "accueil" -> ((AccueilController) loader.getController()).setIndexController(this);
-            case "connexion" -> ((ConnexionController) loader.getController()).setIndexController(this);
-            case "inscription" -> ((InscriptionController) loader.getController()).setIndexController(this);
-            case "articles" -> ((ArticlesController) loader.getController()).setIndexController(this);
-            case "membres" -> ((MembresController) loader.getController()).setIndexController(this);
-            default -> {
-            }
+            case "accueil" :
+                AccueilController accueilController = loader.getController();
+                accueilController.setIndexController(this);
+                break;
+            case "connexion" :
+                ConnexionController connexionController = loader.getController();
+                connexionController.setIndexController(this);
+                break;
+            case "inscription" :
+                InscriptionController inscriptionController = loader.getController();
+                inscriptionController.setIndexController(this);
+                break;
+            case "articles" :
+                ArticlesController articlesController = loader.getController();
+                articlesController.setIndexController(this);
+                break;
+            case "membres" :
+                MembresController membresController = loader.getController();
+                membresController.setIndexController(this);
+                break;
+            case "statistique" :
+                StatistiqueController statistiqueController = loader.getController();
+                statistiqueController.setIndexController(this);
+                break;
+            case "rentabilite" :
+                RentabiliteController rentabiliteController = loader.getController();
+                rentabiliteController.setIndexController(this);
+                break;
+            default :
+                break;
         }
 
         contentArea.getChildren().removeAll();

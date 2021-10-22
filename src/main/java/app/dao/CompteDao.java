@@ -29,9 +29,8 @@ public class CompteDao extends DAO<Compte>{
     }
 
     public boolean findByEmail(String email) {
-        String query = "SELECT compte_id FROM compte WHERE compte_email = ?";
         try {
-            PreparedStatement preparedStatement = super.connection.prepareStatement(query);
+            PreparedStatement preparedStatement = super.connection.prepareStatement(SELECT_BY_EMAIL);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) return true;
@@ -43,9 +42,8 @@ public class CompteDao extends DAO<Compte>{
 
     public Compte findByEmailPwd(String email, String mdp) {
         Compte compte = null;
-        String query = "SELECT * FROM compte WHERE compte_email = ? AND compte_mdp = ?";
         try {
-            PreparedStatement preparedStatement = super.connection.prepareStatement(query);
+            PreparedStatement preparedStatement = super.connection.prepareStatement(SELECT_BY_EMAIL_PWD);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, mdp);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -59,9 +57,8 @@ public class CompteDao extends DAO<Compte>{
     @Override
     public Compte findById(long id) {
         Compte compte = null;
-        String query = "SELECT * FROM compte WHERE compte_id = ?";
         try {
-            PreparedStatement preparedStatement = super.connection.prepareStatement(query);
+            PreparedStatement preparedStatement = super.connection.prepareStatement(SELECT_BY_ID);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             compte = getResultSet(resultSet);

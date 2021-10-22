@@ -1,8 +1,6 @@
 package app.model;
 
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.*;
 
 import java.sql.Date;
 
@@ -13,6 +11,14 @@ public class Enchere {
     protected ObjectProperty<Date> date;
     protected ObjectProperty<Article> article;
     protected ObjectProperty<Membre> membre;
+
+    public Enchere(){
+        this.id = new SimpleLongProperty();
+        this.montant = new SimpleFloatProperty();
+        this.date = new SimpleObjectProperty<>();
+        this.article = new SimpleObjectProperty<>();
+        this.membre = new SimpleObjectProperty<>();
+    }
 
     public long getId() {
         return id.get();

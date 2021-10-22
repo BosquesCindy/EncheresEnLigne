@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.controller.RentabiliteController"
-            prefHeight="500.0" prefWidth="750.0">
 
+<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.RentabiliteController">
+   <children>
+      <Label layoutX="313.0" layoutY="29.0" text="Rentabilité">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="81.0" layoutY="88.0" text="Année">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="datePicker" layoutX="131.0" layoutY="85.0" prefHeight="26.0" prefWidth="110.0" />
+      <Pane layoutX="74.0" layoutY="128.0" prefHeight="342.0" prefWidth="610.0">
+         <children>
+            <TextArea editable="false" layoutX="4.0" layoutY="1.0" prefHeight="316.0" prefWidth="610.0" text="Après étude du marché, la société EnchèresEnLigne a fait les prévisions suivantes pour l’année 2007 :&#10;- répartition prévisionnelle des insertions d’après le montant du prix de départ de l’objet :&#10;       . 20% de 0 à 9,99 €&#10;       . 25% de 10 à 24,99 €&#10;       . 30% de 25 à 99,99 €&#10;       . 25% à partir de 100 €&#10;- nombre moyen d’insertions : 100 000 annonces par semaine ;&#10;- nombre moyen de visites quotidiennes : 120 000 visites ;&#10;- durée moyenne des enchères : 2 semaines ;&#10;- prix de vente moyen d’un objet : 300 € ;&#10;- taux de vente : 45 % des objets proposés ;&#10;- charges prévisionnelles : les charges fixes (personnel, amortissements, intérêts, publicité, coûts &#10;techniques, etc.) sont estimées à 20 000 000 € et les charges variables (contrôle des annonces, &#10;bande passante, etc.) à 5 200 000 €." />
+         </children>
+      </Pane>
+      <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="702.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/close.png" />
+         </image>
+      </ImageView>
+   </children>
 </AnchorPane>

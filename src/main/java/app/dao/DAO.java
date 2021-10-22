@@ -1,5 +1,7 @@
 package app.dao;
 
+import app.model.Article;
+import app.model.Enchere;
 import app.util.Database;
 
 import java.sql.Connection;

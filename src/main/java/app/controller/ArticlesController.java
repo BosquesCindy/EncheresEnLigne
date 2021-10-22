@@ -46,15 +46,7 @@ public class ArticlesController implements Initializable {
     private IndexController indexController;
     private HashMap<Button, Article> hashMapBtnArticle;
 
-    private void manageArticle(){
-        if (indexController.getCompte() == null) {
-            tabPanelArticle.getTabs().remove(tabMesArticles);
-        }
-    }
 
-    public void setIndexController(IndexController indexController) {
-        this.indexController = indexController;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -77,6 +69,13 @@ public class ArticlesController implements Initializable {
         cbxCategorie.setItems(dataCategorie);
     }
 
+    public void initData(IndexController indexController){
+        this.indexController = indexController;
+    }
+
+    public void setIndexController(IndexController indexController) {
+        this.indexController = indexController;
+    }
 
     public void handleClicks(ActionEvent actionEvent) {
 
@@ -125,6 +124,7 @@ public class ArticlesController implements Initializable {
             detailArticleController.setIndexController(this.indexController);
             detailArticleController.setStage(stage);
             detailArticleController.setArticle(article);
+            detailArticleController.initStage();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -142,12 +142,17 @@ public class ArticlesController implements Initializable {
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
-
+    private void manageArticle(){
+        if (indexController.getCompte() == null) {
+            tabPanelArticle.getTabs().remove(tabMesArticles);
+        }
+    }
 
 }

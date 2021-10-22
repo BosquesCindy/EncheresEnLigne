@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class SignalerArticleDao extends DAO<SignalerArticle> {
+
+
 //    ArrayList<SignalerArticle> signalerArticles = new ArrayList<SignalerArticle>();
     @Override
     public SignalerArticle findById(long id) {

@@ -31,6 +31,14 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
 
 
+        /*
+        fakerMembres();
+        fakerArticle();
+        fakerEnchere();
+
+         */
+
+
         Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("index.fxml")));
 
         root.setOnMousePressed(event -> {
@@ -62,23 +70,31 @@ public class Main extends Application {
 
         Random random = new Random();
         Faker faker = new Faker(new Locale("fr"));
+        // DAO
         CategorieDao categorieDao = new CategorieDao();
         MembreDao membreDao = new MembreDao();
         ArticleDao articleDao = new ArticleDao();
         OptionEnchereDao optionEnchereDao = new OptionEnchereDao();
+
+        // Data
         ArrayList<Categorie> categories = categorieDao.findAll();
         ArrayList<Membre> membres = membreDao.findAll();
         ArrayList<OptionEnchere> optionEncheres = optionEnchereDao.findAll();
+
+        // Entity
         Article article;
 
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 20; i++) {
             article = new Article();
             article.setTitre(faker.commerce().productName());
             article.setDescription(faker.lorem().characters(10, 20));
             article.setFraisPort(random.nextFloat(20));
+            article.setPas(0.1F);
+            article.setPrixDepart(random.nextFloat(40, 200));
             article.setDateCloture(Date.valueOf(LocalDate.now().plusDays(30)));
             article.setVendeur(membres.get(random.nextInt(membres.size())));
             article.setCategorie(categories.get(random.nextInt(categories.size())));
+
             articleDao.create(article);
         }
 
@@ -96,7 +112,7 @@ public class Main extends Application {
         String nom, prenom, email;
 
         // Membre
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 200; i++) {
 
             do {
                 nom = faker.name().firstName();
@@ -121,6 +137,45 @@ public class Main extends Application {
 
     }
 
+    public static void fakerEnchere() {
+
+        Random random = new Random();
+        // DAO
+        MembreDao membreDao = new MembreDao();
+        ArticleDao articleDao = new ArticleDao();
+        EnchereDao enchereDao = new EnchereDao();
+
+        // Data
+        ArrayList<Membre> membres = membreDao.findAll();
+        ArrayList<Article> articles = articleDao.findAll();
+
+        // Entity
+        Article article;
+        Enchere enchere;
+        float pas, prixDepart, prixEnCours, montantEnchere, prixLimite;
+
+
+        for (int i = 0; i < membres.size(); i++){
+            article = articles.get(random.nextInt(articles.size()));
+            pas = article.getPas();
+            prixDepart = article.getPrixDepart();
+            prixEnCours = article.getPrixEnCours();
+            // Début des enchères
+            if (prixEnCours == 0) {
+                prixLimite = prixDepart * (1 + pas);
+            } else {
+                prixLimite = prixEnCours * (1 + pas);
+            }
+            enchere = new Enchere();
+            enchere.setMontant(random.nextFloat(prixLimite, prixLimite + 50));
+            enchere.setDate(new Date(System.currentTimeMillis()));
+            enchere.setMembre(membres.get(i));
+            enchere.setArticle(article);
+            enchereDao.create(enchere);
+        }
+
+
+    }
     // Generates a random int with n digits
     public static int generateRandomDigits(int n) {
         int m = (int) Math.pow(10, n - 1);

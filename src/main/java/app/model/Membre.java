@@ -1,14 +1,8 @@
 package app.model;
 
-import app.dao.ArticleDao;
-import app.dao.VoteDao;
 import javafx.beans.property.*;
 
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 public class Membre {
 

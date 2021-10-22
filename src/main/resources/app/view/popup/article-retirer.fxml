@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchorPaneArticleRetirer" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.RetirerArticleController">
+   <children>
+      <Label layoutX="296.0" layoutY="30.0" text="Retirer Article">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="103.0" layoutY="106.0" text="Article signalé:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Text fx:id="codeArticle" layoutX="248.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CodeArticle" underline="true" />
+      <Label layoutX="103.0" layoutY="156.0" text="Raisons de signalement:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="raisonSignalement" editable="false" layoutX="168.0" layoutY="198.0" prefHeight="200.0" prefWidth="429.0" text="Cet article ne respecte pas les règles d'enchère en ligne..." />
+      <Button fx:id="retirer" layoutX="222.0" layoutY="426.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="89.0" text="Retirer">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="annulerRetirer" layoutX="443.0" layoutY="426.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="89.0" text="Annuler">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="711.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../assets/close.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

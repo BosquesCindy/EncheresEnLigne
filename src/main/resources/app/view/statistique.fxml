@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.controller.StatistiqueController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.StatistiqueController">
+   <children>
+      <Label layoutX="325.0" layoutY="27.0" text="Statistiques">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="92.0" layoutY="89.0" text="Année-semaine">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <DatePicker layoutX="209.0" layoutY="86.0" prefHeight="26.0" prefWidth="138.0" />
+      <TableView layoutX="148.0" layoutY="177.0" prefHeight="278.0" prefWidth="485.0">
+        <columns>
+          <TableColumn prefWidth="159.2000274658203" text="Catégorie" />
+          <TableColumn prefWidth="89.60003662109375" text="CA" />
+            <TableColumn prefWidth="131.199951171875" text="Nombre d'objets" />
+            <TableColumn prefWidth="105.5999755859375" text="Visites" />
+        </columns>
+      </TableView>
+      <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="702.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/close.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="92.0" layoutY="138.0" text="Etat de la semaine">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>

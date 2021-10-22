@@ -81,7 +81,7 @@ public class MembreDao extends DAO<Membre>{
                 membre.setId(resultSet.getLong("membre_id"));
                 membre.setNom(resultSet.getString("membre_nom"));
                 membre.setPrenom(resultSet.getString("membre_prenom"));
-                membre.setDateNaissance(Date.valueOf(String.valueOf(resultSet.getDate("membre_date_naissance"))));
+                membre.setDateNaissance((resultSet.getDate("membre_date_naissance")));
                 membre.setCodePostal(resultSet.getString("membre_code_postal"));
                 membre.setAdressePostale(resultSet.getString("membre_adresse_postale"));
                 membre.setVille(resultSet.getString("membre_ville"));
